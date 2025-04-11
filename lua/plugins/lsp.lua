@@ -169,6 +169,7 @@ end,
   dependencies = {
     "mfussenegger/nvim-dap",
     "rcarriga/nvim-dap-ui",
+    "nvim-neotest/nvim-nio"
   },
   config = function()
     local dap = require("dap")
@@ -234,6 +235,16 @@ end,
     })
   end,
 },
+{
+  "akinsho/bufferline.nvim",
+  version = "*",
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  config = function()
+    require("bufferline").setup({})
+  end,
+}
+
+
 }
 
 
