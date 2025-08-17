@@ -55,7 +55,29 @@ return {
 
       -- Python
       lspconfig.pyright.setup({})
-    end,
+     -- Diagnostics config
+    vim.diagnostic.config({
+      virtual_text = true,
+      signs = true,
+      underline = true,
+      float = {
+        border = "rounded",
+        source = "always",
+        header = "",
+        prefix = "",
+      },
+      update_in_insert = false,
+      severity_sort = true,
+    })
+
+    vim.api.nvim_create_autocmd("CursorHold", {
+      callback = function()
+        vim.diagnostic.open_float(nil, { focus = false })
+      end,
+    })
+
+    vim.o.updatetime = 300 
+     end,
   },
   -- Completion + Snippets
  
@@ -174,6 +196,13 @@ end,
   config = function()
     local dap = require("dap")
     local dapui = require("dapui")
+    vim.keymap.set("n", "<F5>", function() dap.continue() end)
+    vim.keymap.set("n", "<F10>", function() dap.step_over() end)
+    vim.keymap.set("n", "<F11>", function() dap.step_into() end)
+    vim.keymap.set("n", "<F12>", function() dap.step_out() end)
+    vim.keymap.set("n", "<Leader>b", function() dap.toggle_breakpoint() end)
+    vim.keymap.set("n", "<Leader>B", function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end)
+    vim.keymap.set("n", "<Leader>dr", function() dap.repl.open() end)
     
 	dap.configurations.typescript = {
 		{
